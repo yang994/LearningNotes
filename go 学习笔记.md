@@ -33,3 +33,28 @@
 ## unsafe包
 * 获取变量的大小
   `unsafe.Sizeof()` //返回变量的大小 单位：Byte
+## sync.map 线程安全的数据结构
+* 定义：
+  ```
+    var test sync.map
+  ```
+  线程安全的kv对类型的数据结构，key和value可以是任意结构,不需要相同
+* 方法（增删改查）：
+  ```
+  testvalue,ok := test.Load(testkey)
+  ```
+  读出对应key的value，读失败时ok为false,`注意`,此时返回的testvalue为结构格式，需要进行强制格式转换，变为原来的格式
+  ```
+  test.Store(testkey,testvalue)
+  ```
+  将testkey/testvalue作为kv对放入结构中
+  ```
+  test.Delete(testkey)
+  ```
+  传入key值删除结构体中对应的kv对
+  ```
+  test.Range( func(k, v interface{}) bool {
+					return true
+				} )
+  ```
+  迭代函数，结构体中的每一个变量进行循环操作，做法是传入一个回调函数，这个函数的参数为结构体中的kv对，每一次循环，就运行一次传入的函数。函数的返回值用于控制循环是否继续，继续循环返回true，否则返回false
