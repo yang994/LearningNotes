@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+mefs test setKeeper 0x635e1345A6FA9da5CadbB2d3D806B66E948c920c
+mefs test setKeeper 0x1adCa07Ae9bC70fc8c8d4C972176d1a1C810f0Ec
+mefs test setKeeper 0x9ADb6BC98FD4eE2bFF716034B9653dC5F0558B5f
+mefs test setKeeper 0xf904237239a79f535bdc77622CCfB31E3B3f83C9
+mefs test setKeeper 0x6Bd50cA3Ba83151f8Cb133B3C90737E173243adf
+mefs test setKeeper 0xd61E260aAA4AF3D64B899029E8c4025c96Ab31ec

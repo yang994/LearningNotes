@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	shell "github.com/ipfs/go-mefs-api"
+	shell "github.com/xcshuan/go-mefs-api"
 )
 
 func main() {
