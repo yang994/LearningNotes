@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	shell "github.com/xcshuan/go-mefs-api"
 )
@@ -26,11 +27,28 @@ func (p *i1) testfunc2(rename string) string {
 	return rename
 }
 
+type UserState int32
+
+const (
+	Starting UserState = iota
+	GroupStarted
+	BothStarted
+)
+
 func main() {
-	a := i1{
-		name: "123",
-	}
-	a.testfunc2("345")
+	testGoRouting()
+	fmt.Println("gorouting函数已经返回")
+	time.Sleep(time.Hour)
+}
+
+func testGoRouting() {
+	go func() {
+		for i := 1; ; i++ {
+			fmt.Println(i)
+			time.Sleep(time.Second)
+		}
+	}()
+	return
 }
 
 func testRS() {
