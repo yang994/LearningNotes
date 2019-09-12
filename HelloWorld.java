@@ -1,11 +1,47 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class HelloWorld {
+public class HelloWorld{
     public static void main(String[] args) {
-        test1(1024);
+        Scanner s=new Scanner(System.in);
+        int a=s.nextInt();
+        System.out.println(a);
     }
-    public static void test1(int n){
-        int out = Integer.parseInt("10101",2);
-        System.out.println(out);
+}
+class Solution {
+    public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
+        int s=0;
+        ArrayList<ArrayList<Integer>> outList = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> workList = new ArrayList<>();
+        for (int i=1;i<sum;i++){
+            if(s==sum){
+                outList.add(copyList(workList));
+                s+=i;
+                workList.add(i);
+                for(;s>=sum;){
+                    s-=workList.remove(0);
+                }
+
+            }
+            else if(s<sum){
+                s+=i;
+                workList.add(i);
+            }
+            else if(s>sum){
+                s+=i;
+                workList.add(i);
+                for(;s>=sum;){
+                    s-=workList.remove(0);
+                }
+            }
+            
+        }
+        return outList;
+    }
+    public ArrayList<Integer> copyList(ArrayList<Integer> a){
+        ArrayList<Integer> out=new ArrayList<>();
+        for(int i=0;i<a.size();i++){
+            out.add(a.get(i));
+        }
+        return out;
     }
 }
