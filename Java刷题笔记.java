@@ -286,3 +286,41 @@ public class Solution {
         return sb.toString();
     }
 }
+
+
+
+/*
+>>>>>>>>>>>>>>>>>>>>>调用Math包>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+>>>>>>>>>>>>>>>>>>>>>调用Math包>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+*/
+//乘方操作、移位操作
+
+public class Solution {
+    public int Sum_Solution(int n) {
+        int sum=(int)Math.pow(n, 2)+n;  //pow返回double类型的数
+        return sum>>1;
+    }
+}
+
+
+/*
+>>>>>>>>>>>>>>>>>>>>>位运算>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
+>>>>>>>>>>>>>>>>>>>>>位运算>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+*/
+//位运算的思想理解
+
+public class Solution {
+    public int Add(int num1,int num2) {
+        int a=num1^num2;    //异或，此时没有进位
+        int b = num1&num2;  //与 获取进位为1，没进位为0
+        int c = b<<1;       //进位符右移一位，准备相加
+        if(b!=0){
+            a=Add(a,c);     //若有进位需要，则递归加 精辟，直到最后没有进位  精辟啊！
+        }
+        return a;
+    }
+}
+
+

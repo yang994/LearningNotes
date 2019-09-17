@@ -26,6 +26,7 @@
     移除下标为n的元素，并且返回这个元素，类比堆栈的pop
   + ArrayList.remove(Object o)
     移除这个数组中的 o元素 成功删除就返回true
+  + ArrayList.get(int i)
 
 #### Hashtable 哈希表
   + 初始化：Hashtable h=new Hashtable()
