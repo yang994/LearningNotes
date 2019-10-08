@@ -33,9 +33,10 @@
   + 完全形式：`INSERT INTO a VALUES (1,2,3,4)` 向a表中插入一行，数据是1,2,3,4（这个表有4列）
   + 缺省形式 插入部分数据：`INSERT INTO a（b，c） VALUES (1,2)`向a表中插入一行，b列为1，c列为2，其他数据缺省
 
-### 修改操作 `Update`
+### 修改操作 `UPDATE SET`
 
-+ 格式： `UPDATE a SET b=1 WHERE....` 修改a表中的b列数据，修改数据条目满足WHERE语句
++ 格式： `UPDATE a SET b=1,c=2..... WHERE....` 修改a表中的b列数据，修改数据条目满足WHERE语句
++ 更新多列数据 用逗号隔开
 
 ### 删除操作 `DELETE`
 
@@ -108,3 +109,25 @@
       e decimal,      //小数
     )
   ```
+
++ 约束条件
+  + 添加在定义表之后 如`a int NOT NULL`
+  + `NOT NULL` 新建字段时，必须对该项赋值，否则无法新建
+  + `UNIQUE` 唯一约束，在表中，对每个字段，这个属性唯一
+  + `PRIMARY KEY`主键，唯一标识一个字段，每个表只能有一个主键 不为空
+  + `FOREIGN KEY`外键，只想其他表中的主键
+  + `CHECK` 限定取值范围 如`CHECK (a>0)`
+  + `DEFAULT`缺省约束，设定默认值 如 `DEFAULT 1`
+
++ 索引操作 `INDEX`
+  + `CREATE INDEX I ON A (a,b...)` 在A表的a、b甚至更多列创建名为I的索引
+  + 索引用于快速查找数据,有索引的表更新更慢
+
++ 删除操作 `DROP`
+  + `DROP INDEX I`
+  + `DROP TABLE A`
+  + `DROP DATABASE D`
+  + `TRUNCATE TABLE A`清空A表中数据
+
++ 修改表操作`ALTER TABLE`
+  + 
