@@ -59,6 +59,7 @@
 
 + `WHERE a IN (v1,v2....)`a列的值在列表中存在
 + 应该等价于 `a=v1 OR a=v2 OR .......`
++ 也等价于 `a LIKE [v1v2...]` 但这个时候，v1 v2应该都是单个字符
 
 ### 在两数之间 `BETWEEN AND`
 
@@ -118,6 +119,7 @@
   + `FOREIGN KEY`外键，只想其他表中的主键
   + `CHECK` 限定取值范围 如`CHECK (a>0)`
   + `DEFAULT`缺省约束，设定默认值 如 `DEFAULT 1`
+  + `AUTO_INCREMENT`自增约束，类比go中的常量表达iota,通常和主键一起使用，不同数据库使用的格式会有不同
 
 + 索引操作 `INDEX`
   + `CREATE INDEX I ON A (a,b...)` 在A表的a、b甚至更多列创建名为I的索引
@@ -130,4 +132,11 @@
   + `TRUNCATE TABLE A`清空A表中数据
 
 + 修改表操作`ALTER TABLE`
-  + 
+  + `ALTER TABLE A ADD a int`添加一列a 类型为int
+  + `ALTER TABLE A DROP COLUMN a` 删除a列
+  + `ALTER TABLE A ALTER COLUMN a char`把a列数据类型改为char
+  + `ALTER TABLE A AUTO_INCREMENT=100`表A自增序列的起始数设置为100
+
+### 视图相关操作`VIEW`
+
++ 创建视图
