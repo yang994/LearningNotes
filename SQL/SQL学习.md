@@ -75,7 +75,7 @@
 
 + 从多个表中获取结果
 + 基本操作：`SELECT A.a,B.b FROM A,B WHERE A.p1=B.p2` A和B通过A中p1列和B中p2列连接起来
-+ JOIN使用 `A JOIN B ON 条件`按某种条件进行A表和B表的链接，有四种模式 `INNER JOIN`、`LEFT JOIN`、`RIGHT JOIN`、`FULL JOIN`
++ JOIN使用 `SELECT A.a,B.b FROM A JOIN B ON 条件`按某种条件进行A表和B表的链接，有四种模式 `INNER JOIN`、`LEFT JOIN`、`RIGHT JOIN`、`FULL JOIN`
   + `INNER JOIN`只返回满足条件的行
   + `LEFT JOIN`在INNER JOIN的基础上，A不满足条件的行也会返回，其中B链接的位置为空
   + `RIGHT JOIN`同LEFT JOIN，A变为B
