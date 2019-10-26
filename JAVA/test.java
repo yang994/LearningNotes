@@ -1,25 +1,17 @@
-class Animal{
-    public void move(){
-       System.out.println("动物可以移动");
-    }
- }
-  
- class Dog extends Animal{
-    public void move(){
-       System.out.println("狗可以跑和走");
-    }
-    public void bark(){
-       System.out.println("狗可以吠叫");
-    }
- }
-  
- public class test{
-    public static void main(String args[]){
-       Animal a = new Animal(); // Animal 对象
-       Dog b = new Dog(); // Dog 对象
-  
-       a.move();// 执行 Animal 类的方法
-       b.move();//执行 Dog 类的方法
-       b.bark();
-    }
- }
+import java.util.*;
+public class test{
+   static double array[] = new double[10];
+   public static void main(String[] args) {
+      //Scanner in = new Scanner(System.in);
+      //while(in.hasNextLine()){
+         //String a = in.nextLine();
+        // char[] b = a.toCharArray();
+      //   char[] c = Arrays.copyOfRange(b, 0, 4);
+    //     System.out.println(a.substring(1, 2));
+  //       System.out.println(c);
+//
+      //}
+      ArrayList<Integer> a = new ArrayList<>();
+         System.out.println(array[9]);
+   }
+}

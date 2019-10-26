@@ -105,7 +105,6 @@ public class Solution {
             TreeNode t=queue.remove(0);     //remove函数应用
             if(t.left!=null) queue.add(t.left); //add函数应用
             if(t.right!=null)queue.add(t.right);
-            out.add(t.val);
         }
         return out;
     }

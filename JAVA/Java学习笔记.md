@@ -22,6 +22,7 @@
     这个用于将r进制的字符串s 转化为10进制
 
 #### ArrayList 数组
+  + ArrayList.add(Object o)/add(int i, Object o)
   + ArrayList.remove(int n)
     移除下标为n的元素，并且返回这个元素，类比堆栈的pop
   + ArrayList.remove(Object o)
