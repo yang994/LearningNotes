@@ -1,4 +1,6 @@
 run:
-	go run HelloWorld.go
+	go build
+	./golang
+	go clean
 
 .PHONY: run
