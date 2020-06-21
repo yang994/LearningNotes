@@ -1,23 +1,30 @@
 package main
 
 import (
-	"crypto/rand"
-	"crypto/sha256"
 	"fmt"
-	"math"
-	"math/big"
 	"sort"
+	"strconv"
+	"strings"
 	"time"
+
+	"github.com/memoio/go-mefs/utils/metainfo"
 )
 
-var KEEPERS = []string{"8MHS9fZzRaHNj4mP1kYDebwySmLzaw", "8MGRZbvn8caS431icB2P1uT74B3EHh", "8MJCzFbpXCvdfzmJy5L8jiw4w1qPdY", "8MKX58Ko5vBeJUkfgpkig53jZzwqoW", "8MHYzNkm6dF9SWU5u7Py8MJ31vJrzS"}
+type payInfo struct {
+	pid       string
+	uid       string
+	spaceTime int64
+	stStart   int64
+	stEnd     int64
+	sign      []byte
+}
 
 func main() {
 	count := []int{0, 0, 0, 0, 0}
 	now := int64(1587198745)
-	if true {
+	if false {
 		for i := 0; i < 1000000; i++ {
-			var tsl timesortlist
+			var tsl sortlist
 			now += RangeRand(30*60, 60*60)
 			for j, kid := range KEEPERS {
 				thisData := data{
@@ -34,57 +41,53 @@ func main() {
 		test()
 	}
 }
-func h256(kid string, stEnd int64, round int) []byte {
-	h := sha256.New()
-	in := fmt.Sprintf("%s_%d_%d", kid, stEnd, round)
-	h.Write([]byte(in))
-	return h.Sum(nil)
-}
-
-type data struct {
-	index int
-	h     []byte
-}
-
-type timesortlist []data //该结构用来对挑战结果按时间进行排序，以便计算时空值
-func (p timesortlist) Swap(i, j int) {
-	p[i].index, p[j].index = p[j].index, p[i].index
-	for x, _ := range p[i].h {
-		p[i].h[x], p[j].h[x] = p[j].h[x], p[i].h[x]
-	}
-}
-func (p timesortlist) Len() int           { return len(p) }
-func (p timesortlist) Less(i, j int) bool { return aBiggerThanB(p[i].h, p[j].h) }
-func aBiggerThanB(a, b []byte) bool {
-	if len(a) != len(b) {
-		fmt.Println("len err")
-		return len(a) < len(b)
-	}
-	for i, value := range a {
-		if value < b[i] {
-			return false
-		}
-	}
-	return true
-}
 
 func test() {
-	fmt.Println(time.Now().Unix())
+	a:=time.Now()
+	for i:=0;i<1000;i++{
+		handleSTpayReply()
+	}
+	fmt.Println(time.Since(a))
 }
 
-func RangeRand(min, max int64) int64 {
-	if min > max {
-		panic("the min is greater than max!")
+const (
+	TMAX = 3600
+	TMIN = 1800
+)
+
+//Leader时空支付流程
+//选主 -> 算时空值 -> 广播
+func spaceTimepay() {
+	stStart := queryStEnd("uid")
+	if keeperIsLeader("uid", "kid", stStart) {
+		spaceTime, chalList := resultSummary("uid", "pid", stStart, stStart+60*3600)
+		strChalList := []string{}
+		for _, cr := range chalList {
+			strChalList = append(strChalList, cr.toString())
+		}
+		strings.Join(strChalList, "\n")
+		metainfo.NewKeyMeta("uid", metainfo.Test, "stStart", "stEnd", strconv.Itoa(int(spaceTime)), "pid")
 	}
+}
 
-	if min < 0 {
-		f64Min := math.Abs(float64(min))
-		i64Min := int64(f64Min)
-		result, _ := rand.Int(rand.Reader, big.NewInt(max+1+i64Min))
+//验证节点验证工作
+func handleSpaceTimePay(km *metainfo.KeyMeta, metaValue string) {
+	stStart := queryStEnd("uid") //查stStart
+	if keeperIsLeader("uid", "kid", stStart) {
+		strings.Split(metaValue, "\n")
+		spaceTime, chalResult := resultSummary("uid", "pid", stStart, stStart+60*3600)
+		for _, data := range chalResult {
+			data.check()
+		}
+		msg:=strings.Join([]string{"stStart", "stEnd", strconv.Itoa(int(spaceTime)), "pid", "uid"}, "")
+		GetSign([]byte(msg), "private.pem")
+	}
+}
 
-		return result.Int64() - i64Min
-	} else {
-		result, _ := rand.Int(rand.Reader, big.NewInt(max-min+1))
-		return min + result.Int64()
+func handleSTpayReply(){
+	stStart := queryStEnd("uid")
+	_, chalResult := resultSummary("uid", "pid", stStart, stStart+60*3600)
+	for _, data := range chalResult {
+		data.check()
 	}
 }
